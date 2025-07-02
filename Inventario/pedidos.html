@@ -1,0 +1,131 @@
+<!--
+  pedidos.html
+  Página exclusiva para que los clientes realicen pedidos.
+-->
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Realiza tu pedido - VF comercial</title>
+    <link rel="stylesheet" href="Styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1 style="font-size: 2.2em; margin-bottom: 0.2em; letter-spacing: 2px">
+        Realiza tu pedido
+      </h1>
+      <div class="subtitle" style="font-size: 1.2em; margin-bottom: 2em">
+        Haga su pedido acá
+      </div>
+      <section
+        id="order-section"
+        style="
+          background: #f8fbff;
+          border-radius: 14px;
+          box-shadow: 0 2px 12px rgba(44, 62, 80, 0.07);
+          padding: 32px 24px 24px 24px;
+          max-width: 480px;
+          margin: 0 auto;
+        "
+      >
+        <form id="order-form">
+          <label for="order-product" style="margin-bottom: 4px">Producto</label>
+          <select
+            id="order-product"
+            required
+            style="margin-bottom: 12px"
+          ></select>
+          <label for="order-quantity" style="margin-bottom: 4px"
+            >Cantidad</label
+          >
+          <input
+            type="number"
+            id="order-quantity"
+            min="1"
+            required
+            style="margin-bottom: 12px"
+          />
+          <label for="order-name" style="margin-bottom: 4px">Tu nombre</label>
+          <input
+            type="text"
+            id="order-name"
+            required
+            style="margin-bottom: 12px"
+          />
+          <label for="order-email" style="margin-bottom: 4px"
+            >Correo electrónico</label
+          >
+          <input
+            type="email"
+            id="order-email"
+            required
+            style="margin-bottom: 18px"
+          />
+          <button
+            type="submit"
+            style="
+              width: 100%;
+              font-size: 1.1em;
+              padding: 12px 0;
+              margin-top: 10px;
+            "
+          >
+            Hacer pedido
+          </button>
+        </form>
+        <div
+          class="order-success"
+          id="order-success"
+          style="display: none; margin-top: 18px"
+        ></div>
+      </section>
+      <footer
+        style="
+          text-align: center;
+          margin-top: 40px;
+          color: #888;
+          font-size: 1.08em;
+          border-top: 1px solid #e1e1e1;
+          padding-top: 18px;
+        "
+      >
+        ¿Dudas o consultas? Contáctanos:<br />
+        <a
+          href="mailto:vfcomercial2022@gmail.com"
+          style="color: #2980b9; text-decoration: underline"
+          >vfcomercial2022@gmail.com</a
+        ><br />
+        <span style="color: #2980b9; font-weight: bold">Hanler Vargas</span> |
+        <a
+          href="tel:8098803680"
+          style="color: #2980b9; text-decoration: underline"
+          >809-880-3680</a
+        >
+      </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="Script.js"></script>
+    <script>
+      // Refrescar productos disponibles cada vez que se muestre la página de pedidos
+      document.addEventListener("DOMContentLoaded", function () {
+        if (typeof renderOrderProducts === "function") renderOrderProducts();
+        // Escuchar cambios en el almacenamiento local para actualizar el select en tiempo real
+        window.addEventListener("storage", function (e) {
+          if (e.key === "products") {
+            renderOrderProducts();
+          }
+        });
+        // Si no hay productos, mostrar mensaje
+        const select = document.getElementById("order-product");
+        if (select && select.options.length === 0) {
+          const option = document.createElement("option");
+          option.textContent = "No hay productos disponibles";
+          option.disabled = true;
+          option.selected = true;
+          select.appendChild(option);
+        }
+      });
+    </script>
+  </body>
+</html>

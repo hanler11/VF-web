@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Metadatos y enlaces de estilos -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VF comercial</title>
+    <!-- Estilos principales -->
+    <link rel="stylesheet" href="Styles.css" />
+  </head>
+  <body>
+    <!-- Modal de login de administrador -->
+    <!-- Permite el acceso al panel de administración mediante contraseña -->
+    <div
+      id="login-modal"
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: #232946cc;
+        z-index: 2000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <form
+        id="login-form"
+        style="
+          background: #fff;
+          padding: 32px 28px 24px 28px;
+          border-radius: 16px;
+          box-shadow: 0 8px 32px #23294633;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          min-width: 320px;
+          max-width: 90vw;
+          align-items: center;
+        "
+      >
+        <!-- Título y campo de contraseña -->
+        <h2 style="color: #232946; margin-bottom: 8px">Acceso administrador</h2>
+        <input
+          type="password"
+          id="admin-pass"
+          placeholder="Contraseña de administrador"
+          required
+          style="
+            font-size: 1.1em;
+            padding: 12px 14px;
+            border-radius: 7px;
+            border: 1.5px solid #c7d2fe;
+            width: 100%;
+            max-width: 260px;
+          "
+        />
+        <!-- Botones de entrar y cancelar -->
+        <div
+          style="display: flex; gap: 10px; width: 100%; justify-content: center"
+        >
+          <button
+            type="submit"
+            style="
+              background: linear-gradient(90deg, #2563eb 0%, #60a5fa 100%);
+              color: #fff;
+              border: none;
+              border-radius: 7px;
+              padding: 10px 22px;
+              font-size: 1em;
+              cursor: pointer;
+              box-shadow: 0 2px 8px #2563eb22;
+            "
+          >
+            Entrar
+          </button>
+          <button
+            type="button"
+            id="cancel-admin-login"
+            style="
+              background: linear-gradient(90deg, #ef4444 0%, #fbbf24 100%);
+              color: #fff;
+              border: none;
+              border-radius: 7px;
+              padding: 10px 22px;
+              font-size: 1em;
+              cursor: pointer;
+              box-shadow: 0 2px 8px #ef444422;
+            "
+          >
+            Cancelar
+          </button>
+        </div>
+        <!-- Mensaje de error de login -->
+        <div
+          id="login-error"
+          style="
+            color: #ef4444;
+            font-size: 0.98em;
+            display: none;
+            margin-top: 4px;
+          "
+        >
+          Contraseña incorrecta
+        </div>
+      </form>
+    </div>
+    <!-- Contenedor principal de la SPA -->
+    <div class="container" style="text-align: center">
+      <!-- --- Cabecera con logo y título --- -->
+      <div style="width: 100%; display: flex; justify-content: center">
+        <div
+          style="
+            position: relative;
+            width: 100%;
+            min-height: 110px;
+            margin-bottom: 12px;
+          "
+        >
+          <img
+            src="logo_vfcomercial.png"
+            alt="Logo VF Comercial"
+            style="
+              position: absolute;
+              left: 0;
+              top: 50%;
+              transform: translateY(-50%);
+              max-width: 110px;
+              width: 22vw;
+              min-width: 70px;
+              display: block;
+            "
+          />
+          <h1
+            style="
+              margin: 0;
+              font-size: 2.6em;
+              letter-spacing: 1px;
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              transform: translate(-50%, -50%);
+              width: max-content;
+            "
+          >
+            VF comercial
+          </h1>
+          <!-- Botón para cambiar a la vista de pedidos -->
+          <button
+            id="btn-ver-pedidos"
+            style="
+              position: absolute;
+              right: 0;
+              top: 50%;
+              transform: translateY(-50%);
+              margin: 0 8px;
+              background: linear-gradient(90deg, #2563eb 0%, #60a5fa 100%);
+              color: #fff;
+              border: none;
+              border-radius: 8px;
+              padding: 10px 22px;
+              font-size: 1em;
+              font-weight: 600;
+              box-shadow: 0 2px 8px #2563eb22;
+              cursor: pointer;
+            "
+          >
+            Hacer pedido
+          </button>
+        </div>
+      </div>
+      <!-- --- Navegación entre apartados --- -->
+      <nav style="text-align: center; margin-bottom: 24px">
+        <button id="btn-ver-inventario" style="margin: 0 8px; display: none">
+          Ver inventario
+        </button>
+        <button id="btn-ver-historial" style="margin: 0 8px; display: none">
+          Historial de pedidos
+        </button>
+      </nav>
+      <!-- --- Apartado de inventario (solo admin puede agregar/editar/eliminar) --- -->
+      <div id="apartado-inventario">
+        <div id="inventory-summary"></div>
+        <form id="product-form">
+          <input
+            type="text"
+            id="name"
+            placeholder="Nombre del producto"
+            required
+          />
+          <input
+            type="number"
+            id="quantity"
+            placeholder="Cantidad"
+            min="1"
+            required
+          />
+          <input type="text" id="category" placeholder="Categoría" />
+          <button type="submit">Agregar producto</button>
+        </form>
+        <input
+          type="text"
+          id="search"
+          placeholder="Buscar por nombre o categoría"
+        />
+        <button id="export-excel">Exportar a Excel</button>
+        <h2>Lista de productos</h2>
+        <div style="overflow-x: auto">
+          <table id="inventory-table" border="1">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Cantidad</th>
+                <th>Categoría</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <!-- --- Apartado de pedidos para clientes --- -->
+      <div id="apartado-pedidos" style="display: none">
+        <h2>Realiza tu pedido</h2>
+        <section id="order-section">
+          <form id="order-form">
+            <label for="order-product">Producto</label>
+            <select id="order-product" required></select>
+            <label for="order-quantity">Cantidad</label>
+            <input type="number" id="order-quantity" min="1" required />
+            <label for="order-name">Tu nombre</label>
+            <input type="text" id="order-name" required />
+            <label for="order-email">Correo electrónico</label>
+            <input type="email" id="order-email" required />
+            <button type="submit">Enviar pedido</button>
+          </form>
+          <div
+            class="order-success"
+            id="order-success"
+            style="display: none"
+          ></div>
+        </section>
+      </div>
+      <!-- --- Apartado de historial de pedidos --- -->
+      <div id="apartado-historial" style="display: none">
+        <h2>Historial de pedidos</h2>
+        <input
+          type="text"
+          id="search-orders"
+          placeholder="Buscar por nombre, producto o email"
+          style="margin-bottom: 10px; width: 100%"
+        />
+        <button id="export-orders" style="margin-bottom: 10px">
+          Exportar pedidos a Excel
+        </button>
+        <div style="overflow-x: auto">
+          <table id="orders-table" border="1">
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <!-- --- Botón flotante y sección 'Sobre nosotros' --- -->
+      <div
+        id="about-section"
+        style="
+          position: fixed;
+          bottom: 24px;
+          right: 24px;
+          z-index: 1100;
+          max-width: 340px;
+          text-align: center;
+          display: none;
+        "
+      >
+        <button
+          id="btn-about"
+          style="
+            background: linear-gradient(90deg, #fbbf24 0%, #fde68a 100%);
+            color: #7a5a1e;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 32px;
+            font-size: 1.08em;
+            font-weight: 600;
+            box-shadow: 0 2px 8px #fbbf2422;
+            cursor: pointer;
+            margin-bottom: 14px;
+          "
+        >
+          Sobre nosotros
+        </button>
+        <div
+          id="about-content"
+          style="
+            display: none;
+            background: #fffbe8;
+            color: #232946;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px #fbbf2422;
+            padding: 22px 18px;
+            margin-top: 10px;
+            font-size: 1.08em;
+            line-height: 1.6;
+          "
+        >
+          <strong>VF Comercial</strong> es una compañía dedicada a la venta de
+          envases plásticos y frascos de cristal, comprometida con brindar el
+          mejor servicio posible a nuestros clientes.<br /><br />
+          Somos una empresa en crecimiento, enfocada en construir relaciones
+          duraderas con clientes confiables que valoren un servicio atento,
+          cercano y profesional.
+        </div>
+      </div>
+      <!-- --- Pie de página con datos de contacto --- -->
+      <footer
+        style="
+          text-align: center;
+          margin-top: 32px;
+          color: #888;
+          font-size: 1em;
+        "
+      >
+        ¿Dudas o consultas? Contáctanos:<br />
+        <a
+          href="mailto:vfcomercial2022@gmail.com"
+          style="color: #2980b9; text-decoration: underline"
+          >vfcomercial2022@gmail.com</a
+        ><br />
+        <span style="color: #2980b9; font-weight: bold">Hanler Vargas</span> |
+        <a
+          href="tel:8098803680"
+          style="color: #2980b9; text-decoration: underline"
+          >809-880-3680</a
+        >
+        <br />
+        <a
+          href="https://wa.me/18098803680"
+          target="_blank"
+          style="
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 10px;
+            color: #25d366;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 1.08em;
+          "
+        >
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+            alt="WhatsApp"
+            style="
+              width: 28px;
+              height: 28px;
+              border-radius: 6px;
+              box-shadow: 0 1px 4px #0002;
+              background: #fff;
+              padding: 2px;
+            "
+          />
+          WhatsApp directo
+        </a>
+      </footer>
+      <!-- --- Botón de modo oscuro --- -->
+      <button
+        id="toggle-dark"
+        style="
+          position: fixed;
+          top: 18px;
+          right: 18px;
+          z-index: 1000;
+          background: #232946;
+          color: #fff;
+          border-radius: 50%;
+          width: 44px;
+          height: 44px;
+          border: none;
+          box-shadow: 0 2px 8px #23294633;
+          font-size: 1.3em;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        "
+      >
+        🌙
+      </button>
+      <!-- --- Botón de login admin flotante --- -->
+      <button
+        id="admin-login-btn"
+        style="
+          position: fixed;
+          bottom: 24px;
+          left: 24px;
+          z-index: 1200;
+          background: linear-gradient(90deg, #2563eb 0%, #60a5fa 100%);
+          color: #fff;
+          border: none;
+          border-radius: 8px;
+          padding: 10px 22px;
+          font-size: 1em;
+          font-weight: 600;
+          box-shadow: 0 2px 8px #2563eb22;
+          cursor: pointer;
+          display: none;
+        "
+      >
+        Entrar como admin
+      </button>
+      <!-- --- Toast de notificaciones --- -->
+      <div id="toast" class="toast" style="display: none"></div>
+    </div>
+    <!-- --- Scripts principales --- -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="Script.js"></script>
+  </body>
+</html>

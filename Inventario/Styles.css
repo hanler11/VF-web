@@ -1,0 +1,575 @@
+/*
+  Styles.css
+  Hojas de estilo principal para la SPA de inventario y pedidos de VF Comercial
+  Comentarios agregados para cada bloque y sección relevante
+*/
+
+/* --- Fondo y fuente general --- */
+body {
+  /* Fondo degradado y fuente base */
+  background: linear-gradient(135deg, #1e293b 0%, #3b82f6 60%, #f1f5f9 100%);
+  font-family: "Segoe UI", "Roboto", Arial, sans-serif;
+  color: #222;
+  margin: 0;
+  min-height: 100vh;
+}
+
+/* --- Contenedor principal --- */
+.container {
+  /* Fondo semitransparente, bordes y sombra */
+  background: rgba(30, 41, 59, 0.93);
+  max-width: 700px;
+  margin: 40px auto 0 auto;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(30, 41, 59, 0.18);
+  padding: 32px 28px 16px 28px;
+  position: relative;
+  color: #f1f5f9;
+}
+
+/* --- Título y subtítulo --- */
+h1 {
+  /* Título principal estilizado */
+  text-align: center;
+  color: #60a5fa;
+  font-size: 2.2em;
+  margin-bottom: 0.2em;
+  letter-spacing: 1px;
+}
+.subtitle {
+  /* Subtítulo debajo del título */
+  text-align: center;
+  color: #a5b4fc;
+  margin-bottom: 18px;
+  font-size: 1.1em;
+}
+
+/* --- Navegación y botones principales --- */
+nav button {
+  /* Botones de navegación estilizados */
+  background: linear-gradient(90deg, #2563eb 0%, #60a5fa 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 22px;
+  font-size: 1em;
+  margin: 0 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.13);
+  transition: background 0.2s, transform 0.1s;
+}
+nav button:hover {
+  background: linear-gradient(90deg, #60a5fa 0%, #2563eb 100%);
+  transform: translateY(-2px) scale(1.04);
+}
+
+button,
+.btn {
+  /* Transiciones y efectos generales para botones */
+  transition: background 0.2s, transform 0.13s, box-shadow 0.18s;
+}
+button:hover,
+.btn:hover {
+  /* Efecto de brillo y sombra en hover */
+  filter: brightness(1.08);
+  box-shadow: 0 4px 16px #6366f133;
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* --- Formularios --- */
+form {
+  /* Formularios compactos y alineados */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 18px;
+  align-items: center;
+}
+
+/* --- Inputs, selects y labels compactos y legibles --- */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+form input,
+form select,
+#search,
+#search-orders,
+#order-product {
+  /* Inputs y selects estilizados */
+  color: #232946 !important;
+  background: #fff !important;
+  border: 1.5px solid #c7d2fe !important;
+  font-size: 1.13em !important;
+  padding: 12px 14px !important;
+}
+form label,
+#apartado-pedidos label,
+#order-form label {
+  /* Etiquetas de formularios */
+  font-size: 1em !important;
+  font-weight: 500;
+  margin-bottom: 3px !important;
+  letter-spacing: 0.01em;
+}
+#order-product {
+  min-width: 140px;
+  width: 100%;
+  max-width: 100%;
+}
+#search,
+#search-orders {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  border-radius: 7px;
+  border: 1.5px solid #c7d2fe;
+  background: #f1f5f9;
+  font-size: 1em;
+}
+form input,
+form select {
+  margin-bottom: 10px !important;
+}
+#product-form,
+#order-form {
+  /* Formularios verticales y centrados */
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto 18px auto;
+}
+#product-form button,
+#order-form button {
+  margin-top: 6px;
+}
+
+/* --- Efecto de foco en los inputs --- */
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+form input:focus,
+form select:focus {
+  /* Efecto visual al enfocar inputs */
+  border-color: #6366f1;
+  outline: none;
+  box-shadow: 0 0 0 2px #6366f133;
+}
+
+/* --- Inputs con error visual --- */
+input.error,
+select.error {
+  /* Inputs con error */
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 2px #ef444433 !important;
+  background: #fef2f2 !important;
+}
+input:invalid,
+select:invalid {
+  box-shadow: none;
+}
+
+/* --- Botones de formularios y exportar --- */
+#order-form button {
+  /* Botón de enviar pedido */
+  background: linear-gradient(90deg, #16a34a 0%, #22d3ee 100%);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 10px 22px;
+  font-size: 1em;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(34, 211, 238, 0.08);
+  transition: background 0.2s, transform 0.1s;
+}
+#order-form button:hover {
+  background: linear-gradient(90deg, #22d3ee 0%, #16a34a 100%);
+  transform: translateY(-2px) scale(1.04);
+}
+
+#export-excel,
+#export-orders {
+  /* Botones de exportar a Excel */
+  background: linear-gradient(90deg, #fbbf24 0%, #fde68a 100%);
+  color: #7a5a1e;
+  border: none;
+  border-radius: 7px;
+  padding: 8px 18px;
+  font-size: 1em;
+  margin-bottom: 10px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.08);
+  transition: background 0.2s, transform 0.1s;
+}
+#export-excel:hover,
+#export-orders:hover {
+  background: linear-gradient(90deg, #fde68a 0%, #fbbf24 100%);
+  color: #a67c2d;
+  transform: translateY(-2px) scale(1.04);
+}
+
+/* --- Títulos y resúmenes de secciones --- */
+h2 {
+  /* Títulos de secciones */
+  color: #3b82f6;
+  margin-top: 18px;
+  margin-bottom: 10px;
+  font-size: 1.3em;
+  letter-spacing: 0.5px;
+}
+
+#inventory-summary {
+  /* Resumen de inventario */
+  color: #6366f1;
+  font-weight: 500;
+  margin-bottom: 8px;
+  font-size: 1.08em;
+}
+
+/* --- Tabla de inventario y pedidos --- */
+#inventory-table {
+  /* Tabla principal de productos */
+  width: 100%;
+  border-collapse: collapse;
+  background: #f8fafc;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(59, 130, 246, 0.06);
+}
+#inventory-table th,
+#inventory-table td {
+  padding: 10px 8px;
+  text-align: left;
+  border-bottom: 1px solid #e0e7ff;
+}
+#inventory-table th {
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+#inventory-table tr:last-child td {
+  border-bottom: none;
+}
+#inventory-table tr:hover {
+  background: #60a5fa33;
+  transition: background 0.2s;
+}
+#inventory-table button {
+  /* Botones de acciones en la tabla */
+  background: linear-gradient(90deg, #ffe5b4 0%, #ffe0a3 100%);
+  color: #7a5a1e;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 0.98em;
+  margin-right: 4px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  box-shadow: 0 2px 8px rgba(255, 224, 163, 0.08);
+}
+#inventory-table button:hover {
+  background: linear-gradient(90deg, #ffe0a3 0%, #ffe5b4 100%);
+  color: #a67c2d;
+  transform: scale(1.06);
+}
+
+/* --- Mensaje de éxito del pedido --- */
+.order-success {
+  /* Mensaje de confirmación de pedido */
+  background: linear-gradient(90deg, #16a34a 0%, #22d3ee 100%);
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 8px;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 1.1em;
+  box-shadow: 0 2px 8px rgba(34, 211, 238, 0.08);
+  animation: fadeIn 0.5s;
+}
+
+/* --- Footer --- */
+footer {
+  /* Pie de página estilizado */
+  background: #1e293b;
+  border-radius: 0 0 18px 18px;
+  box-shadow: 0 -2px 12px rgba(59, 130, 246, 0.04);
+  padding: 18px 0 10px 0;
+  margin-top: 32px;
+  color: #a5b4fc;
+  font-size: 1.05em;
+}
+footer a {
+  color: #60a5fa;
+  text-decoration: underline;
+  font-weight: 500;
+}
+footer span {
+  color: #a5b4fc;
+  font-weight: bold;
+}
+
+/* --- Animaciones --- */
+@keyframes fadeIn {
+  /* Animación de aparición suave */
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Responsive --- */
+@media (max-width: 600px) {
+  /* Ajustes para móviles */
+  .container {
+    padding: 12px 4px 8px 4px;
+    max-width: 98vw;
+  }
+  form {
+    flex-direction: column;
+    gap: 8px;
+  }
+  #inventory-table th,
+  #inventory-table td {
+    padding: 7px 4px;
+    font-size: 0.98em;
+  }
+  /* Botón y sección 'Sobre nosotros' */
+  #about-section {
+    right: 8px;
+    bottom: 8px;
+    max-width: 95vw;
+  }
+  #about-content {
+    font-size: 1em;
+    padding: 16px 8px;
+  }
+}
+
+/* --- Modo oscuro --- */
+body.dark-mode {
+  /* Fondo y colores para modo oscuro */
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: #f1f5f9;
+}
+body.dark-mode .container {
+  background: rgba(15, 23, 42, 0.97);
+  color: #f1f5f9;
+}
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode .subtitle {
+  color: #a5b4fc;
+}
+body.dark-mode #inventory-table {
+  background: #232946;
+  color: #f1f5f9;
+}
+body.dark-mode #inventory-table th {
+  background: #6366f1;
+  color: #fff;
+}
+body.dark-mode #inventory-table tr:hover {
+  background: #6366f122;
+}
+body.dark-mode input,
+body.dark-mode select {
+  background: #232946;
+  color: #f1f5f9;
+  border-color: #6366f1;
+}
+body.dark-mode footer {
+  background: #232946;
+  color: #a5b4fc;
+}
+
+/* --- Estilos restaurados --- */
+body:not(.dark-mode) #inventory-table tr:hover,
+body:not(.dark-mode) #orders-table tr:hover {
+  background: #e0e7ff44;
+}
+body,
+.container,
+.subtitle,
+h1,
+h2,
+#inventory-summary,
+input,
+select,
+label,
+#inventory-table,
+#orders-table,
+#inventory-table td,
+#orders-table td,
+#inventory-table th,
+#orders-table th,
+footer,
+footer a,
+footer span {
+  color: #232946 !important;
+}
+
+.container {
+  background: rgba(241, 245, 249, 0.97) !important;
+}
+
+.subtitle,
+h2,
+#inventory-summary {
+  color: #2563eb !important;
+}
+
+#inventory-table th,
+#orders-table th {
+  background: #2563eb !important;
+  color: #fff !important;
+}
+
+footer {
+  background: #f1f5f9 !important;
+  color: #232946 !important;
+}
+footer a,
+footer span {
+  color: #2563eb !important;
+}
+
+body.dark-mode,
+body.dark-mode .container,
+body.dark-mode .subtitle,
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode #inventory-summary,
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode label,
+body.dark-mode #inventory-table,
+body.dark-mode #orders-table,
+body.dark-mode #inventory-table td,
+body.dark-mode #orders-table td,
+body.dark-mode #inventory-table th,
+body.dark-mode #orders-table th,
+body.dark-mode footer,
+body.dark-mode footer a,
+body.dark-mode footer span {
+  color: #f1f5f9 !important;
+}
+body.dark-mode .container {
+  background: rgba(30, 41, 59, 0.97) !important;
+}
+body.dark-mode footer {
+  background: #232946 !important;
+}
+body.dark-mode .subtitle,
+body.dark-mode h2,
+body.dark-mode #inventory-summary {
+  color: #a5b4fc !important;
+}
+nav button,
+#order-form button,
+#export-excel,
+#export-orders {
+  color: #232946 !important;
+  background: linear-gradient(90deg, #fbbf24 0%, #fde68a 100%) !important;
+}
+nav button:hover,
+#order-form button:hover,
+#export-excel:hover,
+#export-orders:hover {
+  color: #232946 !important;
+  background: linear-gradient(90deg, #fde68a 0%, #fbbf24 100%) !important;
+}
+
+body.dark-mode nav button,
+body.dark-mode #order-form button,
+body.dark-mode #export-excel,
+body.dark-mode #export-orders {
+  color: #f1f5f9 !important;
+  background: linear-gradient(90deg, #2563eb 0%, #60a5fa 100%) !important;
+}
+body.dark-mode nav button:hover,
+body.dark-mode #order-form button:hover,
+body.dark-mode #export-excel:hover,
+body.dark-mode #export-orders:hover {
+  color: #f1f5f9 !important;
+  background: linear-gradient(90deg, #60a5fa 0%, #2563eb 100%) !important;
+}
+
+#product-form button {
+  /* Botón de agregar producto */
+  background: linear-gradient(90deg, #fbbf24 0%, #fde68a 100%) !important;
+  color: #7a5a1e !important;
+  border: none;
+  border-radius: 7px;
+  padding: 9px 18px;
+  font-size: 1em;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.08);
+  margin-top: 8px;
+  margin-bottom: 6px;
+  transition: background 0.18s, transform 0.13s, box-shadow 0.18s;
+}
+#product-form button:hover {
+  background: linear-gradient(90deg, #fde68a 0%, #fbbf24 100%) !important;
+  color: #a67c2d !important;
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 4px 16px #fbbf2433;
+}
+
+/* Botón y sección 'Sobre nosotros' */
+#about-section {
+  /* Botón flotante y cuadro informativo */
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1100;
+  max-width: 340px;
+  text-align: center;
+  display: none;
+}
+#btn-about {
+  background: linear-gradient(90deg, #fbbf24 0%, #fde68a 100%);
+  color: #7a5a1e;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 32px;
+  font-size: 1.08em;
+  font-weight: 600;
+  box-shadow: 0 2px 8px #fbbf2422;
+  cursor: pointer;
+  margin-bottom: 14px;
+  transition: background 0.2s, color 0.2s;
+}
+#btn-about:hover {
+  background: linear-gradient(90deg, #fde68a 0%, #fbbf24 100%);
+  color: #a67c1a;
+}
+#about-content {
+  display: none;
+  background: #fffbe8;
+  color: #232946;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px #fbbf2422;
+  padding: 22px 18px;
+  margin-top: 10px;
+  font-size: 1.08em;
+  line-height: 1.6;
+  animation: fadeIn 0.3s;
+}
+@media (max-width: 600px) {
+  #about-section {
+    right: 8px;
+    bottom: 8px;
+    max-width: 95vw;
+  }
+  #about-content {
+    font-size: 1em;
+    padding: 16px 8px;
+  }
+}
